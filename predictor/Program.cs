@@ -2,6 +2,6 @@
 Console.WriteLine("enter number:");
 string numbere = Console.ReadLine();
 
-int num = numbere, result;
-result = num << 1;
+Double num = Double.Parse(numbere);
+Double result = num << 1;
 Console.WriteLine("The number multiplied by two is: {0}", result);
