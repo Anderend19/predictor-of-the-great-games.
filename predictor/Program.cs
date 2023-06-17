@@ -1,16 +1,30 @@
 ﻿
-    using System;  
-    class Expo
+    using System;
+using System.Reflection;
+
+class Expo
 {
     static void Main()
     {
-        double m, n;
-        Console.WriteLine("Enter the Number : ");
-        m = double.Parse(Console.ReadLine());
-        Console.WriteLine("Give the Exponent : ");
-        n = double.Parse(Console.ReadLine());
-        double value1 = Math.Pow(m, n);
+        int m, n;
+        Console.Write("Enter the Number : ");
+        m = int.Parse(Console.ReadLine());
+        Console.Write("Give the Exponent : ");
+        n = int.Parse(Console.ReadLine());
+        int value1 = power(m, n);
         Console.WriteLine("Result : {0}", value1);
         Console.ReadLine();
+    }
+
+    static int power(int num, int exp)
+    {
+        int result = 1;
+
+        for (int i = 0; i < exp; i++)
+        {
+            result = result * num;
+        }
+
+        return result;
     }
 }
