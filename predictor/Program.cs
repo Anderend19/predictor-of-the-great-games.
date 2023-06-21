@@ -11,11 +11,16 @@ class Expo
         m = int.Parse(Console.ReadLine());
         Console.Write("Give the Exponent : ");
         n = int.Parse(Console.ReadLine());
-        int value1 = power(m, n);
+        int value1 = superpower(m, n);
         Console.WriteLine("Result : {0}", value1);
         Console.ReadLine();
     }
+    
+    static int superpower(int num, int exp)
+    {
 
+        return power(num, exp) + power(exp, num);
+    }
     static int power(int num, int exp)
     {
         int result = 1;
@@ -28,3 +33,4 @@ class Expo
         return result;
     }
 }
+  
