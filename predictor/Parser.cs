@@ -1,6 +1,7 @@
 ﻿using predictor;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -58,11 +59,16 @@ namespace soccer_predictor
                     homeTeam.Losses++;
                     awayTeam.Wins++;
                 }
+                homeTeam.GoalsFor = homeTeam.GoalsFor + mMatches[i].HomeScore;
+                awayTeam.GoalsFor = awayTeam.GoalsFor + mMatches[i].AwayScore;
+                homeTeam.GoalsAG = homeTeam.GoalsAG + mMatches[i].AwayScore;
+                awayTeam.GoalsAG = awayTeam.GoalsAG + mMatches[i].HomeScore;
             }
+           
 
-            for(int i = 0; i < mTeams.Count; i++) 
+            for (int i = 0; i < mTeams.Count; i++) 
             {
-                Console.WriteLine(string.Format("{0} {1}W-{2}L-{3}T", mTeams[i].Name, mTeams[i].Wins, mTeams[i].Losses, mTeams[i].Ties));
+                Console.WriteLine(string.Format("{0} {1}W-{2}L-{3}T {4}GoalsFor {5}GoalsAG ", mTeams[i].Name, mTeams[i].Wins, mTeams[i].Losses, mTeams[i].Ties, mTeams[i].GoalsFor, mTeams[i].GoalsAG));
             }
         }
     }

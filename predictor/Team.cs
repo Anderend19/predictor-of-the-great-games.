@@ -12,7 +12,8 @@ namespace predictor
         public int Wins;
         public int Losses;
         public int Ties;
-
+        public int GoalsFor;
+        public int GoalsAG;
         public Team(string name) 
         {
             Name = name;
