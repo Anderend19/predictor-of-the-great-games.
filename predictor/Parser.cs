@@ -19,7 +19,7 @@ namespace soccer_predictor
             string[] lines = contents.Split('\n');
 
             //Parse all the matches
-            for(int i = 1; i < lines.Length; i++)
+            for (int i = 1; i < lines.Length; i++)
             {
                 if (lines[i].Length < 5)
                 {
@@ -27,11 +27,12 @@ namespace soccer_predictor
                 }
                 mMatches.Add(new Match(lines[i]));
             }
-
-            for( int i = 0; i < mMatches.Count; i++) 
+            int maxs = 0;
+            int ib = 0;
+            for (int i = 0; i < mMatches.Count; i++)
             {
                 Team? homeTeam = mTeams.Find(x => x.Name == mMatches[i].HomeTeam);
-                if(homeTeam == null) 
+                if (homeTeam == null)
                 {
                     homeTeam = new Team(mMatches[i].HomeTeam);
                     mTeams.Add(homeTeam);
@@ -44,12 +45,12 @@ namespace soccer_predictor
                     mTeams.Add(awayTeam);
                 }
 
-                if (mMatches[i].HomeScore == mMatches[i].AwayScore) 
+                if (mMatches[i].HomeScore == mMatches[i].AwayScore)
                 {
                     homeTeam.Ties++;
                     awayTeam.Ties++;
                 }
-                else if (mMatches[i].HomeScore > mMatches[i].AwayScore) 
+                else if (mMatches[i].HomeScore > mMatches[i].AwayScore)
                 {
                     homeTeam.Wins++;
                     awayTeam.Losses++;
@@ -63,13 +64,32 @@ namespace soccer_predictor
                 awayTeam.GoalsFor = awayTeam.GoalsFor + mMatches[i].AwayScore;
                 homeTeam.GoalsAG = homeTeam.GoalsAG + mMatches[i].AwayScore;
                 awayTeam.GoalsAG = awayTeam.GoalsAG + mMatches[i].HomeScore;
-            }
-           
+                int maxScore = homeTeam.GoalsFor;
+                int max2score = awayTeam.GoalsFor;
+                int difference = maxScore - max2score;
 
-            for (int i = 0; i < mTeams.Count; i++) 
-            {
-                Console.WriteLine(string.Format("{0} {1}W-{2}L-{3}T {4}GoalsFor {5}GoalsAG ", mTeams[i].Name, mTeams[i].Wins, mTeams[i].Losses, mTeams[i].Ties, mTeams[i].GoalsFor, mTeams[i].GoalsAG));
+              
             }
+
+
+
+            for (int i = 0; i < mTeams.Count; i++)
+            {
+                int maxScore = mTeams[i].GoalsFor;
+                int max2score = mTeams[i].GoalsFor;
+                int difference = maxScore - max2score;
+
+                if (difference > maxs)
+                {
+
+                    maxs = difference;
+                    ib = i;
+                }
+
+            }
+                Console.WriteLine(string.Format("{0} {1}W-{2}L-{3}T {4}GoalsFor {5}GoalsAG ", mTeams[ib].Name, mTeams[ib].Wins, mTeams[ib].Losses, mTeams[ib].Ties, mTeams[ib].GoalsFor, mTeams[ib].GoalsAG));
+            
+
         }
     }
 }
