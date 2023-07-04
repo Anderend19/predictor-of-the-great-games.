@@ -18,6 +18,12 @@ namespace predictor
         {
             Name = name;
         }
+        public double WinPercent()
+        {
+            double score = 1.0 * Wins + 0.5 * Ties;
+            double average = score / (Wins + Ties + Losses);
+            return average;
+        }
         public int CompareTo(Team other)
         {
             return string.Compare(this.Name, other.Name); ;
