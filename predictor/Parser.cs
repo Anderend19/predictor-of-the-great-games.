@@ -86,8 +86,13 @@ namespace soccer_predictor
                 }
 
             }
-                Console.WriteLine(string.Format("{0} {1}W-{2}L-{3}T {4}GoalsFor {5}GoalsAG ", mTeams[ib].Name, mTeams[ib].Wins, mTeams[ib].Losses, mTeams[ib].Ties, mTeams[ib].GoalsFor, mTeams[ib].GoalsAG));
-            
+            mTeams.Sort();
+            for (int i = 0; i < mTeams.Count; i++)
+            {
+
+
+                Console.WriteLine(string.Format("{0} {1}W-{2}L-{3}T {4}GoalsFor {5}GoalsAG ", mTeams[i].Name, mTeams[i].Wins, mTeams[i].Losses, mTeams[i].Ties, mTeams[i].GoalsFor, mTeams[i].GoalsAG));
+            }
 
         }
     }
