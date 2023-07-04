@@ -24,6 +24,12 @@ namespace predictor
             double average = score / (Wins + Ties + Losses);
             return average;
         }
+        public double PPercent()
+        {
+            double scores = 3.0 * Wins + 1.0 * Ties;
+            double Paverage = scores / (Wins + Ties + Losses);
+            return Paverage;
+        }
         public int CompareTo(Team other)
         {
             return string.Compare(this.Name, other.Name); ;
