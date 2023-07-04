@@ -64,9 +64,7 @@ namespace soccer_predictor
                 awayTeam.GoalsFor = awayTeam.GoalsFor + mMatches[i].AwayScore;
                 homeTeam.GoalsAG = homeTeam.GoalsAG + mMatches[i].AwayScore;
                 awayTeam.GoalsAG = awayTeam.GoalsAG + mMatches[i].HomeScore;
-                int maxScore = homeTeam.GoalsFor;
-                int max2score = awayTeam.GoalsFor;
-                int difference = maxScore - max2score;
+                
 
               
             }
@@ -75,8 +73,9 @@ namespace soccer_predictor
 
             for (int i = 0; i < mTeams.Count; i++)
             {
+
                 int maxScore = mTeams[i].GoalsFor;
-                int max2score = mTeams[i].GoalsFor;
+                int max2score = mTeams[i].GoalsAG;
                 int difference = maxScore - max2score;
 
                 if (difference > maxs)
