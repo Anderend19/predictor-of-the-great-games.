@@ -71,9 +71,26 @@ namespace soccer_predictor
                 
                 if (mMatches[i].Event == "FIFA World Cup")
                 {
+
+                    
+                        if (mMatches[i].Event == "FIFA World Cup")
+                        {
+                            if (mMatches[i].HomeTeam[0] == mMatches[i].AwayTeam[0])
+                            {
+                                Console.WriteLine("Draw - " + mMatches[i].Raw);
+                            }
+                            else if (mMatches[i].HomeTeam[0] < mMatches[i].AwayTeam[0])
+                            {
+                                Console.WriteLine(mMatches[i].HomeTeam + " wins - " + mMatches[i].Raw);
+                            }
+                            else
+                            {
+                                Console.WriteLine(mMatches[i].AwayTeam + " wins - " + mMatches[i].Raw);
+                            }
+                        }
+                    
                     counter++;
-                    Console.Write(counter + " ");
-                    Console.WriteLine(mMatches[i].Raw);
+
                     
                 }
             }

@@ -2,11 +2,9 @@
 using soccer_predictor;
 using System.CodeDom.Compiler;
 
-internal class Program
-{
-    private static void Main(string[] args)
-    {
-        Parser parser = new Parser();
-        parser.Parse();
-    }
-}
+Parser parser = new Parser();
+parser.Parse();
+
+List<Match> matches = parser.mMatches;
+
+
