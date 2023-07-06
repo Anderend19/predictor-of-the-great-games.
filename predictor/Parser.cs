@@ -27,8 +27,7 @@ namespace soccer_predictor
                 }
                 mMatches.Add(new Match(lines[i]));
             }
-            int maxs = 0;
-            int ib = 0;
+
             for (int i = 0; i < mMatches.Count; i++)
             {
                 Team? homeTeam = mTeams.Find(x => x.Name == mMatches[i].HomeTeam);
@@ -60,39 +59,25 @@ namespace soccer_predictor
                     homeTeam.Losses++;
                     awayTeam.Wins++;
                 }
-                homeTeam.GoalsFor = homeTeam.GoalsFor + mMatches[i].HomeScore;
-                awayTeam.GoalsFor = awayTeam.GoalsFor + mMatches[i].AwayScore;
-                homeTeam.GoalsAG = homeTeam.GoalsAG + mMatches[i].AwayScore;
-                awayTeam.GoalsAG = awayTeam.GoalsAG + mMatches[i].HomeScore;
+
+                homeTeam.GoalsFor += mMatches[i].HomeScore;
+                homeTeam.GoalsAG += mMatches[i].AwayScore;
+                awayTeam.GoalsFor += mMatches[i].AwayScore;
+                awayTeam.GoalsAG += mMatches[i].HomeScore;
+            }
+            int counter = 0;
+            for (int i = 0; i < mMatches.Count; i++)
+            {
                 
-
-              
-            }
-
-
-
-            for (int i = 0; i < mTeams.Count; i++)
-            {
-
-                int maxScore = mTeams[i].GoalsFor;
-                int max2score = mTeams[i].GoalsAG;
-                int difference = maxScore - max2score;
-
-                if (difference > maxs)
+                if (mMatches[i].Event == "FIFA World Cup")
                 {
-
-                    maxs = difference;
-                    ib = i;
+                    counter++;
+                    Console.Write(counter + " ");
+                    Console.WriteLine(mMatches[i].Raw);
+                    
                 }
-
             }
-            mTeams.Sort();
-            for (int i = 0; i < mTeams.Count; i++)
-            {
 
-
-                Console.WriteLine(string.Format("{0} {1}W-{2}L-{3}T {4}GoalsFor {5}GoalsAG {6}Win% {7}Point%", mTeams[i].Name, mTeams[i].Wins, mTeams[i].Losses, mTeams[i].Ties, mTeams[i].GoalsFor, mTeams[i].GoalsAG, mTeams[i].WinPercent(), mTeams[i].PPercent()));
-            }
 
         }
     }

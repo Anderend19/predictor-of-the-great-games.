@@ -13,15 +13,17 @@ namespace predictor
         public string AwayTeam;
         public int HomeScore;
         public int AwayScore;
-        
+        public string Event;
         public Match(string input)
         {
             Raw = input;
             string[] fields = input.Split(',');
+            
             HomeTeam = fields[1];
             AwayTeam = fields[2];
             HomeScore = int.Parse(fields[3]);
             AwayScore = int.Parse(fields[4]);
+            Event = fields[5];
         }
     }
 }
