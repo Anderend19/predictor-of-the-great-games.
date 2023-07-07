@@ -79,7 +79,7 @@ namespace soccer_predictor
                         
                         if (mMatches[i].HomeTeam[0] == mMatches[i].AwayTeam[0])
                         {
-                            Console.WriteLine("Draw - " + mMatches[i].Raw);
+                            
                             if (mMatches[i].HomeScore == mMatches[i].AwayScore)
                             {
                                 Elo = Elo + 1;
@@ -95,16 +95,17 @@ namespace soccer_predictor
                                 Elo = Elo + 0.3;
                                 Console.Write("0.3 -");
                             }
+                            Console.WriteLine("Draw - " + mMatches[i].Raw);
                         }
                         else if (mMatches[i].HomeTeam[0] < mMatches[i].AwayTeam[0])
                         {
-                            Console.WriteLine(mMatches[i].HomeTeam + " wins - " + mMatches[i].Raw);
+                            
                             if (mMatches[i].HomeScore == mMatches[i].AwayScore)
                             {
                                 Elo = Elo + 0.3;
                                 Console.Write("0.3 -");
                             }
-                            else if (mMatches[i].HomeScore < mMatches[i].AwayScore)
+                            else if (mMatches[i].HomeScore > mMatches[i].AwayScore)
                             {
                                 Elo = Elo + 1;
                                 Console.Write("1 -");
@@ -114,16 +115,17 @@ namespace soccer_predictor
                                 Elo = Elo + 0;
                                 Console.Write("0 -");
                             }
+                            Console.WriteLine(mMatches[i].HomeTeam + " wins - " + mMatches[i].Raw);
                         }
                         else
                         {
-                            Console.WriteLine(mMatches[i].AwayTeam + " wins - " + mMatches[i].Raw);
+                            
                             if (mMatches[i].HomeScore == mMatches[i].AwayScore)
                             {
                                 Elo = Elo + 0.3;
                                 Console.Write("0.3 -");
                             }
-                            else if (mMatches[i].HomeScore < mMatches[i].AwayScore)
+                            else if (mMatches[i].HomeScore > mMatches[i].AwayScore)
                             {
                                 Elo = Elo + 0;
                                 Console.Write("0 -");
@@ -133,6 +135,7 @@ namespace soccer_predictor
                                 Elo = Elo + 1;
                                 Console.Write("1 -");
                             }
+                            Console.WriteLine(mMatches[i].AwayTeam + " wins - " + mMatches[i].Raw);
                         }
                         
                     }
