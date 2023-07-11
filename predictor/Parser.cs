@@ -44,21 +44,8 @@ namespace soccer_predictor
                     mTeams.Add(awayTeam);
                 }
 
-                if (mMatches[i].HomeScore == mMatches[i].AwayScore)
-                {
-                    homeTeam.Ties++;
-                    awayTeam.Ties++;
-                }
-                else if (mMatches[i].HomeScore > mMatches[i].AwayScore)
-                {
-                    homeTeam.Wins++;
-                    awayTeam.Losses++;
-                }
-                else
-                {
-                    homeTeam.Losses++;
-                    awayTeam.Wins++;
-                }
+                homeTeam.WinRating = 1000;
+                awayTeam.WinRating = 1000;
 
                 homeTeam.GoalsFor += mMatches[i].HomeScore;
                 homeTeam.GoalsAG += mMatches[i].AwayScore;
@@ -67,17 +54,31 @@ namespace soccer_predictor
             }
             int counter = 0;
             double Elo = 0;
+            int FIFAcups = 0;
             for (int i = 0; i < mMatches.Count; i++)
             {
-                
-                if (mMatches[i].Event == "FIFA World Cup")
+                Team? homeTeam = mTeams.Find(x => x.Name == mMatches[i].HomeTeam);
+                if (homeTeam == null)
                 {
+                    homeTeam = new Team(mMatches[i].HomeTeam);
+                    mTeams.Add(homeTeam);
+                }
 
+                Team? awayTeam = mTeams.Find(x => x.Name == mMatches[i].AwayTeam);
+                if (awayTeam == null)
+                {
+                    awayTeam = new Team(mMatches[i].AwayTeam);
+                    mTeams.Add(awayTeam);
+                }
+                if (mMatches[i].Event == "FIFA World Cup")
+                
+                {
                     
-                        if (mMatches[i].Event == "FIFA World Cup")
-                        {
+                    FIFAcups = FIFAcups + 1;
+                    
                         
-                        if (mMatches[i].HomeTeam[0] == mMatches[i].AwayTeam[0])
+                        
+                        if (homeTeam.WinRating == awayTeam.WinRating)
                         {
                             
                             if (mMatches[i].HomeScore == mMatches[i].AwayScore)
@@ -97,7 +98,7 @@ namespace soccer_predictor
                             }
                             Console.WriteLine("Draw - " + mMatches[i].Raw);
                         }
-                        else if (mMatches[i].HomeTeam[0] < mMatches[i].AwayTeam[0])
+                        else if (homeTeam.WinRating > awayTeam.WinRating)
                         {
                             
                             if (mMatches[i].HomeScore == mMatches[i].AwayScore)
@@ -136,17 +137,36 @@ namespace soccer_predictor
                                 Console.Write("1 -");
                             }
                             Console.WriteLine(mMatches[i].AwayTeam + " wins - " + mMatches[i].Raw);
+                            
+
                         }
                         
-                    }
+
+                        counter++;
                     
                     
-                    counter++;
+                    
+                    
 
                     
                 }
-                
+                if (mMatches[i].HomeScore == mMatches[i].AwayScore)
+                {
+
+
+                }
+                else if (mMatches[i].HomeScore > mMatches[i].AwayScore)
+                {
+                    homeTeam.WinRating++;
+                    awayTeam.WinRating--;
+                }
+                else
+                {
+                    homeTeam.WinRating--;
+                    awayTeam.WinRating++;
+                }
             }
+            Elo = Elo / FIFAcups;
             Console.WriteLine();
             Console.WriteLine(Elo);
         }
