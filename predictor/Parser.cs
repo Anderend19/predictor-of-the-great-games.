@@ -27,7 +27,7 @@ namespace soccer_predictor
                 }
                 mMatches.Add(new Match(lines[i]));
             }
-
+            double rd = 0;
             for (int i = 0; i < mMatches.Count; i++)
             {
                 Team? homeTeam = mTeams.Find(x => x.Name == mMatches[i].HomeTeam);
@@ -44,19 +44,23 @@ namespace soccer_predictor
                     mTeams.Add(awayTeam);
                 }
 
-                homeTeam.WinRating = 1000;
-                awayTeam.WinRating = 1000;
+                homeTeam.EloRating = 1000;
+                awayTeam.EloRating = 1000;
 
                 homeTeam.GoalsFor += mMatches[i].HomeScore;
                 homeTeam.GoalsAG += mMatches[i].AwayScore;
                 awayTeam.GoalsFor += mMatches[i].AwayScore;
                 awayTeam.GoalsAG += mMatches[i].HomeScore;
             }
-            int counter = 0;
-            double Elo = 0;
+            double ar = 0;
+            double er = 0;
+            double counter = 0;
+            double prediction = 0;
+            double matchPrediction= 0;
             int FIFAcups = 0;
             for (int i = 0; i < mMatches.Count; i++)
             {
+
                 Team? homeTeam = mTeams.Find(x => x.Name == mMatches[i].HomeTeam);
                 if (homeTeam == null)
                 {
@@ -70,105 +74,97 @@ namespace soccer_predictor
                     awayTeam = new Team(mMatches[i].AwayTeam);
                     mTeams.Add(awayTeam);
                 }
-                if (mMatches[i].Event == "FIFA World Cup")
+                rd = homeTeam.EloRating - awayTeam.EloRating;
+                er = 1 / (Math.Pow(10, -1 * rd / 400) + 1);
                 
+                //if (mMatches[i].Event == "FIFA World Cup")
                 {
                     
-                    FIFAcups = FIFAcups + 1;
-                    
-                        
-                        
-                        if (homeTeam.WinRating == awayTeam.WinRating)
-                        {
+
+                    if (rd <= 50 && rd >= -50)
+                    {
                             
-                            if (mMatches[i].HomeScore == mMatches[i].AwayScore)
-                            {
-                                Elo = Elo + 1;
-                                Console.Write("1 -");
-                            }
-                            else if (mMatches[i].HomeScore < mMatches[i].AwayScore)
-                            {
-                                Elo = Elo + 0.3;
-                                Console.Write("0.3 -");
-                            }
-                            else
-                            {
-                                Elo = Elo + 0.3;
-                                Console.Write("0.3 -");
-                            }
-                            Console.WriteLine("Draw - " + mMatches[i].Raw);
+                        if (mMatches[i].HomeScore == mMatches[i].AwayScore)
+                        {
+                            matchPrediction = 1;
+                            Console.Write("1 -");
+                            ar = 0.5;
                         }
-                        else if (homeTeam.WinRating > awayTeam.WinRating)
+                        else if (mMatches[i].HomeScore < mMatches[i].AwayScore)
                         {
-                            
-                            if (mMatches[i].HomeScore == mMatches[i].AwayScore)
-                            {
-                                Elo = Elo + 0.3;
-                                Console.Write("0.3 -");
-                            }
-                            else if (mMatches[i].HomeScore > mMatches[i].AwayScore)
-                            {
-                                Elo = Elo + 1;
-                                Console.Write("1 -");
-                            }
-                            else
-                            {
-                                Elo = Elo + 0;
-                                Console.Write("0 -");
-                            }
-                            Console.WriteLine(mMatches[i].HomeTeam + " wins - " + mMatches[i].Raw);
+                            matchPrediction = 0.3;
+                            Console.Write("0.3 -");
+                            ar = 0;
                         }
                         else
                         {
-                            
-                            if (mMatches[i].HomeScore == mMatches[i].AwayScore)
-                            {
-                                Elo = Elo + 0.3;
-                                Console.Write("0.3 -");
-                            }
-                            else if (mMatches[i].HomeScore > mMatches[i].AwayScore)
-                            {
-                                Elo = Elo + 0;
-                                Console.Write("0 -");
-                            }
-                            else
-                            {
-                                Elo = Elo + 1;
-                                Console.Write("1 -");
-                            }
-                            Console.WriteLine(mMatches[i].AwayTeam + " wins - " + mMatches[i].Raw);
-                            
-
+                            matchPrediction = 0.3;
+                            Console.Write("0.3 -");
+                            ar = 1;
                         }
-                        
+                        Console.WriteLine("Draw - " + mMatches[i].Raw);
+                    }
+                    else if (rd > 50)
+                    {
+                            
+                        if (mMatches[i].HomeScore == mMatches[i].AwayScore)
+                        {
+                            matchPrediction = 0.3;
+                            Console.Write("0.3 -");
+                            ar = 0.5;
+                        }
+                        else if (mMatches[i].HomeScore > mMatches[i].AwayScore)
+                        {
+                            matchPrediction = 1;
+                            Console.Write("1 -");
+                            ar = 1;
+                        }
+                        else
+                        {
+                            matchPrediction = 0;
+                            Console.Write("0 -");
+                            ar = 0;
+                        }
+                        Console.WriteLine(mMatches[i].HomeTeam + " wins - " + mMatches[i].Raw);
+                    }
+                    else
+                    {
+                            
+                        if (mMatches[i].HomeScore == mMatches[i].AwayScore)
+                        {
+                            matchPrediction = 0.3;
+                            Console.Write("0.3 -");
+                            ar = 0.5;
+                        }
+                        else if (mMatches[i].HomeScore > mMatches[i].AwayScore)
+                        {
+                            matchPrediction = 0;
+                            Console.Write("0 -");
+                            ar = 1;
+                        }
+                        else
+                        {
+                            matchPrediction = 1;
+                            Console.Write("1 -");
+                            ar = 0;
+                        }
+                        Console.WriteLine(mMatches[i].AwayTeam + " wins - " + mMatches[i].Raw);
+                    }
+                    homeTeam.EloRating = homeTeam.EloRating + 40 * (ar - er);
+                    awayTeam.EloRating = awayTeam.EloRating - 40 * (ar - er);
+                    counter++;
 
-                        counter++;
-                    
-                    
-                    
-                    
-
-                    
+                    if (mMatches[i].Event == "FIFA World Cup")
+                    {
+                        FIFAcups = FIFAcups + 1;
+                        prediction += matchPrediction;
+                    }
                 }
-                if (mMatches[i].HomeScore == mMatches[i].AwayScore)
-                {
-
-
-                }
-                else if (mMatches[i].HomeScore > mMatches[i].AwayScore)
-                {
-                    homeTeam.WinRating++;
-                    awayTeam.WinRating--;
-                }
-                else
-                {
-                    homeTeam.WinRating--;
-                    awayTeam.WinRating++;
-                }
+                
             }
-            Elo = Elo / FIFAcups;
+            prediction = prediction / FIFAcups;
             Console.WriteLine();
-            Console.WriteLine(Elo);
+            Console.WriteLine(prediction);
         }
     }
 }
