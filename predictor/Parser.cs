@@ -74,7 +74,13 @@ namespace soccer_predictor
                     awayTeam = new Team(mMatches[i].AwayTeam);
                     mTeams.Add(awayTeam);
                 }
-                rd = homeTeam.EloRating - awayTeam.EloRating;
+                if (mMatches[i].nuetral == "FALSE")
+                {
+
+                    homeTeam.EloRating = homeTeam.EloRating + 100;
+
+                } 
+                    rd = homeTeam.EloRating - awayTeam.EloRating;
                 er = 1 / (Math.Pow(10, -1 * rd / 400) + 1);
                 
                 //if (mMatches[i].Event == "FIFA World Cup")
@@ -160,7 +166,11 @@ namespace soccer_predictor
                         prediction += matchPrediction;
                     }
                 }
-                
+                if (mMatches[i].nuetral == "FALSE")
+                {
+                    homeTeam.EloRating = homeTeam.EloRating - 100;
+
+                }
             }
             prediction = prediction / FIFAcups;
             Console.WriteLine();

@@ -14,6 +14,7 @@ namespace predictor
         public int HomeScore;
         public int AwayScore;
         public string Event;
+        public string nuetral;
         public Match(string input)
         {
             Raw = input;
@@ -24,6 +25,7 @@ namespace predictor
             HomeScore = int.Parse(fields[3]);
             AwayScore = int.Parse(fields[4]);
             Event = fields[5];
+            nuetral = fields[8];
         }
     }
 }
