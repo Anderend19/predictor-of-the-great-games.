@@ -56,7 +56,7 @@ namespace soccer_predictor
             int lose = 0;
             int win = 0;
             int mov = 0;
-            int t = 0;
+            int mif = 0;
             double ar = 0;
             double er = 0;
             double counter = 0;
@@ -99,6 +99,20 @@ namespace soccer_predictor
                 {
                     win = mMatches[i].AwayScore;
                     lose = mMatches[i].HomeScore;
+                }
+                if (mMatches[i].Event == "FIFA World Cup")
+                {
+                    mif = 60;
+                    
+                }
+                else if (mMatches[i].Event == "Friendly")
+                {
+                    mif = 20;
+
+                }
+                else
+                {
+                    mif = 40;
                 }
                 rd = homeTeam.EloRating - awayTeam.EloRating;
                 er = 1 / (Math.Pow(10, -1 * rd / 400) + 1);
@@ -196,8 +210,8 @@ namespace soccer_predictor
                         }
                         Console.WriteLine(mMatches[i].AwayTeam + " wins - " + mMatches[i].Raw);
                     }
-                    homeTeam.EloRating = homeTeam.EloRating + 40 * (ar - er) * af;
-                    awayTeam.EloRating = awayTeam.EloRating - 40 * (ar - er) * af;
+                    homeTeam.EloRating = homeTeam.EloRating + mif * (ar - er) * af;
+                    awayTeam.EloRating = awayTeam.EloRating - mif * (ar - er) * af;
                     counter++;
 
                     if (mMatches[i].Event == "FIFA World Cup")
