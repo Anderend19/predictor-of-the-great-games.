@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -52,6 +53,7 @@ namespace soccer_predictor
                 awayTeam.GoalsFor += mMatches[i].AwayScore;
                 awayTeam.GoalsAG += mMatches[i].HomeScore;
             }
+            double help = 400;
             double af = 0;
             int lose = 0;
             int win = 0;
@@ -82,7 +84,7 @@ namespace soccer_predictor
                 if (mMatches[i].nuetral == "FALSE")
                 {
 
-                    homeTeam.EloRating = homeTeam.EloRating + 100;
+                    homeTeam.EloRating = homeTeam.EloRating + 98;
 
                 }
                 if (mMatches[i].HomeScore == mMatches[i].AwayScore)
@@ -107,12 +109,12 @@ namespace soccer_predictor
                 }
                 else if (mMatches[i].Event == "Friendly")
                 {
-                    mif = 20;
+                    mif = 45;
 
                 }
                 else
                 {
-                    mif = 40;
+                    mif = 55;
                 }
                 rd = homeTeam.EloRating - awayTeam.EloRating;
                 er = 1 / (Math.Pow(10, -1 * rd / 400) + 1);
@@ -124,31 +126,31 @@ namespace soccer_predictor
                 }
                 if (mov == 2)
                 {
-                    af = 1.5;
+                    af = 1.4;
 
                 }
                 if (mov == 3)
                 {
-                    af = 1.75;
+                    af = 1.6;
 
                 }
                 if (mov >= 4)
                 {
-                    af = 1.9;
+                    af = 2.35;
 
                 }
                 //if (mMatches[i].Event == "FIFA World Cup")
                 {
 
 
-                    if (rd <= 50 && rd >= -50)
+                    if (rd <= 57.5 && rd >= -57.5)
                     {
                             
                         if (mMatches[i].HomeScore == mMatches[i].AwayScore)
                         {
                             matchPrediction = 1;
                             Console.Write("1 -");
-                            ar = 0.5;
+                            ar = 0.6;
                         }
                         else if (mMatches[i].HomeScore < mMatches[i].AwayScore)
                         {
@@ -164,14 +166,14 @@ namespace soccer_predictor
                         }
                         Console.WriteLine("Draw - " + mMatches[i].Raw);
                     }
-                    else if (rd > 50)
+                    else if (rd > 57.5)
                     {
                             
                         if (mMatches[i].HomeScore == mMatches[i].AwayScore)
                         {
                             matchPrediction = 0.3;
                             Console.Write("0.3 -");
-                            ar = 0.5;
+                            ar = 0.6;
                         }
                         else if (mMatches[i].HomeScore > mMatches[i].AwayScore)
                         {
@@ -194,7 +196,7 @@ namespace soccer_predictor
                         {
                             matchPrediction = 0.3;
                             Console.Write("0.3 -");
-                            ar = 0.5;
+                            ar = 0.6;
                         }
                         else if (mMatches[i].HomeScore > mMatches[i].AwayScore)
                         {
@@ -222,7 +224,7 @@ namespace soccer_predictor
                 }
                 if (mMatches[i].nuetral == "FALSE")
                 {
-                    homeTeam.EloRating = homeTeam.EloRating - 100;
+                    homeTeam.EloRating = homeTeam.EloRating - 98;
 
                 }
 
