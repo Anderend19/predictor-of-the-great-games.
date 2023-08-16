@@ -1,6 +1,8 @@
 ﻿
 using Microsoft.VisualBasic;
 using System;
+using System.Collections.Specialized;
+using System.Data.SqlTypes;
 using System.Numerics;
 using System.Reflection;
 
@@ -11,8 +13,7 @@ class Expo
         string equation;
         Console.Write("binary : ");
         equation = Console.ReadLine();
-        Int64 equat = int.Parse(equation);
-        string binary = Convert.ToString(equat, 10);
+        int binary = Convert.ToInt32(equation, 2);
         Console.Write(binary);
     }
 }
